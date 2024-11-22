@@ -1,9 +1,7 @@
 package gomsf
 
 import (
-	"encoding/json"
 	"fmt"
-
 	"github.com/fatih/structs"
 	"github.com/iami317/gomsf/rpc"
 )
@@ -27,21 +25,40 @@ func (mm *moduleMeta) OptionsDetail() *rpc.ModuleOptionsRes {
 	return mm.options
 }
 
-type OptionsSimple struct {
+var OptionsSimple = map[string][]string{
+	"module": {
+		"Proxies",
+		"RHOSTS",
+		"RPORT",
+		"SSL",
+		"SSLCert",
+		"TARGETURI",
+		"URIPATH",
+		"VHOST",
+		"SRVHOST",
+		"SRVPORT",
+	},
+	"payload": {
+		"LHOST",
+		"LPORT",
+	},
 }
 
-func (mm *moduleMeta) OptionsSimple() *rpc.ModuleOptionsRes {
-	return mm.options
+type OptionsParam struct {
+	Type     string      `json:"type"`
+	Required bool        `json:"required"`
+	Advanced bool        `json:"advanced"`
+	Evasion  bool        `json:"evasion"`
+	Desc     string      `json:"desc"`
+	Default  interface{} `json:"default"`
+	Enums    []string    `json:"enums"`
 }
 
 func (mm *moduleMeta) Options() []string {
 	keys := make([]string, 0, len(*mm.options))
-	for k, v := range *mm.options {
-		bb, _ := json.Marshal(v)
-		fmt.Println(k, "=>", string(bb))
+	for k := range *mm.options {
 		keys = append(keys, k)
 	}
-
 	return keys
 }
 

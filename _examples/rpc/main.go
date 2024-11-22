@@ -12,7 +12,7 @@ func main() {
 		panic(err)
 	}
 
-	if err = client.Login("user", "pass"); err != nil {
+	if err = client.Login("msf", "123456"); err != nil {
 		panic(err)
 	}
 	defer client.Logout()
@@ -21,30 +21,31 @@ func main() {
 		panic(err)
 	}
 
-	version, err := client.Core.Version()
-	if err != nil {
-		panic(err)
-	}
+	/*
+		version, err := client.Core.Version()
+		if err != nil {
+			panic(err)
+		}
 
-	fmt.Printf("Version: %s\nRuby: %s\nAPI: %s\n\n", version.Version, version.Ruby, version.API)
+		fmt.Println(version.String())
+		return
 
-	encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
-		Format: "c",
-	})
-	if err != nil {
-		panic(err)
-	}
+		encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
+			Format: "c",
+		})
+		if err != nil {
+			panic(err)
+		}
 
-	fmt.Println("'AAAA' encoded with shikata_ga_nai:")
-	fmt.Printf("%s\n", encoded)
-
+		fmt.Println("'AAAA' encoded with shikata_ga_nai:")
+		fmt.Printf("%s\n", encoded)
+	*/
 	exploit, err := client.Module.UseExploit("unix/ftp/vsftpd_234_backdoor")
 	if err != nil {
 		panic(err)
 	}
-
+	fmt.Println(exploit.)
 	fmt.Println(exploit.Options())
-
 	fmt.Println(exploit.Required())
 
 	info, err := client.Module.Info(gomsf.ExploitType, "windows/smb/ms08_067_netapi")

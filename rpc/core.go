@@ -1,6 +1,9 @@
 package rpc
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 type core struct {
 	rpc *RPC
@@ -285,6 +288,10 @@ type CoreVersionRes struct {
 	Version string `msgpack:"version" json:"version"` // Framework version
 	Ruby    string `msgpack:"ruby" json:"ruby"`       // Ruby version
 	API     string `msgpack:"api" json:"api"`         // API version
+}
+
+func (version *CoreVersionRes) String() string {
+	return fmt.Sprintf("version:%v ruby:%v api:%v", version.Version, version.Ruby, version.API)
 }
 
 // Version returns the RPC service versions

@@ -7,18 +7,18 @@ type core struct {
 }
 
 type CoreAddModulePathReq struct {
-	Method string
-	Token  string
-	Path   string
+	Method string `json:"method"`
+	Token  string `json:"token"`
+	Path   string `json:"path"`
 }
 
 type CoreAddModulePathRes struct {
-	Exploits  uint32 `msgpack:"exploits"`
-	Auxiliary uint32 `msgpack:"auxiliary"`
-	Post      uint32 `msgpack:"post"`
-	Encoders  uint32 `msgpack:"encoders"`
-	Nops      uint32 `msgpack:"nops"`
-	Payloads  uint32 `msgpack:"payloads"`
+	Exploits  uint32 `msgpack:"exploits" json:"exploits"`
+	Auxiliary uint32 `msgpack:"auxiliary" json:"auxiliary"`
+	Post      uint32 `msgpack:"post" json:"post"`
+	Encoders  uint32 `msgpack:"encoders" json:"encoders"`
+	Nops      uint32 `msgpack:"nops" json:"nops"`
+	Payloads  uint32 `msgpack:"payloads" json:"payloads"`
 }
 
 // AddModulePath adds a new local file system path (local to the server) as a module path
@@ -38,13 +38,13 @@ func (c *core) AddModulePath(path string) (*CoreAddModulePathRes, error) {
 }
 
 type CoreGetgReq struct {
-	Method     string
-	Token      string
-	OptionName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	OptionName string `json:"option_name"`
 }
 
 type CoreGetgRes struct {
-	Result string
+	Result string `json:"result"`
 }
 
 // Getg returns a global datastore option
@@ -69,12 +69,12 @@ type CoreModuleStatsReq struct {
 }
 
 type CoreModuleStatsRes struct {
-	Exploits  uint32 `msgpack:"exploits"`
-	Auxiliary uint32 `msgpack:"auxiliary"`
-	Post      uint32 `msgpack:"post"`
-	Encoders  uint32 `msgpack:"encoders"`
-	Nops      uint32 `msgpack:"nops"`
-	Payloads  uint32 `msgpack:"payloads"`
+	Exploits  uint32 `msgpack:"exploits" json:"exploits"`
+	Auxiliary uint32 `msgpack:"auxiliary" json:"auxiliary"`
+	Post      uint32 `msgpack:"post" json:"post"`
+	Encoders  uint32 `msgpack:"encoders" json:"encoders"`
+	Nops      uint32 `msgpack:"nops" json:"nops"`
+	Payloads  uint32 `msgpack:"payloads" json:"payloads"`
 }
 
 // ModuleStats returns the module stats
@@ -98,12 +98,12 @@ type CoreReloadModulesReq struct {
 }
 
 type CoreReloadModulesRes struct {
-	Exploits  uint32 `msgpack:"exploits"`
-	Auxiliary uint32 `msgpack:"auxiliary"`
-	Post      uint32 `msgpack:"post"`
-	Encoders  uint32 `msgpack:"encoders"`
-	Nops      uint32 `msgpack:"nops"`
-	Payloads  uint32 `msgpack:"payloads"`
+	Exploits  uint32 `msgpack:"exploits" json:"exploits"`
+	Auxiliary uint32 `msgpack:"auxiliary" json:"auxiliary"`
+	Post      uint32 `msgpack:"post" json:"post"`
+	Encoders  uint32 `msgpack:"encoders" json:"encoders"`
+	Nops      uint32 `msgpack:"nops" json:"nops"`
+	Payloads  uint32 `msgpack:"payloads" json:"payloads"`
 }
 
 // ReloadModules reloads framework modules
@@ -127,7 +127,7 @@ type CoreSaveReq struct {
 }
 
 type CoreSaveRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // Save saves current framework settings
@@ -146,14 +146,14 @@ func (c *core) Save() (*CoreSaveRes, error) {
 }
 
 type CoreSetgReq struct {
-	Method      string
-	Token       string
-	OptionName  string
-	OptionValue string
+	Method      string `json:"method"`
+	Token       string `json:"token"`
+	OptionName  string `json:"option_name"`
+	OptionValue string `json:"option_value"`
 }
 
 type CoreSetgRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // Setg sets a global datastore option
@@ -174,12 +174,12 @@ func (c *core) Setg(optionName, optionValue string) (*CoreSetgRes, error) {
 }
 
 type CoreStopReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type CoreStopRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // Stop stops the RPC service
@@ -198,13 +198,13 @@ func (c *core) Stop() (*CoreStopRes, error) {
 }
 
 type CoreThreadKillReq struct {
-	Method   string
-	Token    string
-	ThreadID string
+	Method   string `json:"method"`
+	Token    string `json:"token"`
+	ThreadID string `json:"thread_id"`
 }
 
 type CoreThreadKillRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // ThreadKill kills a framework thread
@@ -229,10 +229,10 @@ type CoreThreadListReq struct {
 }
 
 type CoreThreadListRes map[int]struct {
-	Status   string `msgpack:"status"`
-	Critical bool   `msgpack:"critical"`
-	Name     string `msgpack:"name"`
-	Started  string `msgpack:"started"`
+	Status   string `msgpack:"status" json:"status"`
+	Critical bool   `msgpack:"critical" json:"critical"`
+	Name     string `msgpack:"name" json:"name"`
+	Started  string `msgpack:"started" json:"started"`
 }
 
 // ThreadList returns a list of framework threads
@@ -251,9 +251,9 @@ func (c *core) ThreadList() (*CoreThreadListRes, error) {
 }
 
 type CoreUnsetgReq struct {
-	Method     string
-	Token      string
-	OptionName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	OptionName string `json:"option_name"`
 }
 
 type CoreUnsetgRes struct {
@@ -282,9 +282,9 @@ type CoreVersionReq struct {
 }
 
 type CoreVersionRes struct {
-	Version string `msgpack:"version"` // Framework version
-	Ruby    string `msgpack:"ruby"`    // Ruby version
-	API     string `msgpack:"api"`     // API version
+	Version string `msgpack:"version" json:"version"` // Framework version
+	Ruby    string `msgpack:"ruby" json:"ruby"`       // Ruby version
+	API     string `msgpack:"api" json:"api"`         // API version
 }
 
 // Version returns the RPC service versions

@@ -84,8 +84,7 @@ func (c *Client) HealthCheck() error {
 	return c.Health.Check()
 }
 
-// Login logs in by calling the 'auth.login' API. The authentication token will expire after 5
-// minutes, but will automatically be rewnewed when you make a new RPC request.
+// Login 通过调用auth函数登录。登录的API。身份验证令牌将在5分钟后过期，但在发出新的RPC请求时将自动更新。
 func (c *Client) Login(user, pass string) error {
 	token, err := c.Auth.Login(user, pass)
 	if err != nil {

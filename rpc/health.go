@@ -5,7 +5,7 @@ type health struct {
 }
 
 type HealthCheckReq struct {
-	Method string
+	Method string `json:"method"`
 }
 
 // Check returns whether the service is currently healthy and ready to accept requests

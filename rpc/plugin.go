@@ -5,10 +5,10 @@ type plugin struct {
 }
 
 type PluginLoadReq struct {
-	Method     string
-	Token      string
-	PluginName string
-	Options    map[string]string
+	Method     string            `json:"method"`
+	Token      string            `json:"token"`
+	PluginName string            `json:"plugin_name"`
+	Options    map[string]string `json:"options"`
 }
 
 type PluginLoadRes struct {
@@ -33,12 +33,12 @@ func (p *plugin) Load(pluginName string, pluginOptions map[string]string) (*Plug
 }
 
 type PluginLoadedReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type PluginLoadedRes struct {
-	Plugins []string `msgpack:"plugins"`
+	Plugins []string `msgpack:"plugins" json:"plugins"`
 }
 
 // Loaded returns a list of loaded plugins
@@ -57,9 +57,9 @@ func (p *plugin) Loaded() (*PluginLoadedRes, error) {
 }
 
 type PluginUnLoadReq struct {
-	Method     string
-	Token      string
-	PluginName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	PluginName string `json:"plugin_name"`
 }
 
 type PluginUnLoadRes struct {

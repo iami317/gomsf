@@ -1,6 +1,5 @@
 # gomsf
-![Build Status](https://github.com/hupe1980/gomsf/workflows/build/badge.svg) 
-[![Go Reference](https://pkg.go.dev/badge/github.com/hupe1980/gomsf.svg)](https://pkg.go.dev/github.com/hupe1980/gomsf)
+
 > Golang based RPC client to communicate with Metasploit
 
 https://docs.rapid7.com/metasploit/rpc-api

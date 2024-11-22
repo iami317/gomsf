@@ -5,13 +5,13 @@ type session struct {
 }
 
 type SessionCompatibleModulesReq struct {
-	Method    string
-	Token     string
-	SessionID int
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
 }
 
 type SessionCompatibleModulesRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (s *session) CompatibleModules(session int) (SessionCompatibleModulesRes, error) {
@@ -30,10 +30,10 @@ func (s *session) CompatibleModules(session int) (SessionCompatibleModulesRes, e
 }
 
 type SessionMeterpreterWriteReq struct {
-	Method    string
-	Token     string
-	SessionID int
-	Command   string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
+	Command   string `json:"command"`
 }
 
 type SessionMeterpreterWriteRes struct {
@@ -41,88 +41,88 @@ type SessionMeterpreterWriteRes struct {
 }
 
 type SessionMeterpreterReadReq struct {
-	Method    string
-	Token     string
-	SessionID int
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
 }
 
 type SessionMeterpreterReadRes struct {
-	Data string `msgpack:"data"`
+	Data string `msgpack:"data" json:"data"`
 }
 
 type SessionMeterpreterRunSingleReq struct {
-	Method    string
-	Token     string
-	SessionID int
-	Command   string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
+	Command   string `json:"command"`
 }
 
 type SessionMeterpreterRunSingleRes SessionMeterpreterWriteRes
 
 type SessionMeterpreterDetachReq struct {
-	Method    string
-	Token     string
-	SessionID int
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
 }
 
 type SessionMeterpreterDetachRes SessionMeterpreterWriteRes
 
 type SessionMeterpreterKillReq struct {
-	Method    string
-	Token     string
-	SessionID int
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
 }
 
 type SessionMeterpreterKillRes SessionMeterpreterWriteRes
 
 type SessionShellUpgradeReq struct {
-	Method     string
-	Token      string
-	SessionID  int
-	IPAddress  string
-	PortNumber uint32
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	SessionID  int    `json:"session_id"`
+	IPAddress  string `json:"ip_address"`
+	PortNumber uint32 `json:"port_number"`
 }
 
 type SessionShellUpgradeRes SessionMeterpreterWriteRes
 
 type SessionRingClearReq struct {
-	Method    string
-	Token     string
-	SessionID int
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
 }
 
 type SessionRingClearRes SessionMeterpreterWriteRes
 
 type SessionRingPutReq struct {
-	Method    string
-	Token     string
-	SessionID int
-	Command   string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	SessionID int    `json:"session_id"`
+	Command   string `json:"command"`
 }
 
 type SessionRingPutRes struct {
-	WriteCount uint32 `msgpack:"write_count"`
+	WriteCount uint32 `msgpack:"write_count" json:"write_count"`
 }
 
 type SessionListReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type SessionListRes map[uint32]struct {
-	Type        string `msgpack:"type"`
-	TunnelLocal string `msgpack:"tunnel_local"`
-	TunnelPeer  string `msgpack:"tunnel_peer"`
-	ViaExploit  string `msgpack:"via_exploit"`
-	ViaPayload  string `msgpack:"via_payload"`
-	Description string `msgpack:"desc"`
-	Info        string `msgpack:"info"`
-	Workspace   string `msgpack:"workspace"`
-	SessionHost string `msgpack:"session_host"`
-	SessionPort int    `msgpack:"session_port"`
-	Username    string `msgpack:"username"`
-	UUID        string `msgpack:"uuid"`
-	ExploitUUID string `msgpack:"exploit_uuid"`
+	Type        string `msgpack:"type" json:"type"`
+	TunnelLocal string `msgpack:"tunnel_local" json:"tunnel_local"`
+	TunnelPeer  string `msgpack:"tunnel_peer" json:"tunnel_peer"`
+	ViaExploit  string `msgpack:"via_exploit" json:"via_exploit"`
+	ViaPayload  string `msgpack:"via_payload" json:"via_payload"`
+	Description string `msgpack:"desc" json:"desc"`
+	Info        string `msgpack:"info" json:"info"`
+	Workspace   string `msgpack:"workspace" json:"workspace"`
+	SessionHost string `msgpack:"session_host" json:"session_host"`
+	SessionPort int    `msgpack:"session_port" json:"session_port"`
+	Username    string `msgpack:"username" json:"username"`
+	UUID        string `msgpack:"uuid" json:"uuid"`
+	ExploitUUID string `msgpack:"exploit_uuid" json:"exploit_uuid"`
 }
 
 func (s *session) List() (SessionListRes, error) {

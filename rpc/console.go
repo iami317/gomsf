@@ -10,9 +10,9 @@ type ConsoleCreateReq struct {
 }
 
 type ConsoleCreateRes struct {
-	ID     string `msgpack:"id"`
-	Prompt string `msgpack:"prompt"`
-	Busy   bool   `msgpack:"busy"`
+	ID     string `msgpack:"id" json:"id"`
+	Prompt string `msgpack:"prompt" json:"prompt"`
+	Busy   bool   `msgpack:"busy" json:"busy"`
 }
 
 // Create creates a new framework console instance
@@ -31,13 +31,13 @@ func (c *console) Create() (*ConsoleCreateRes, error) {
 }
 
 type ConsoleDestroyReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
 }
 
 type ConsoleDestroyRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // Destroy deletes a framework console instance
@@ -57,14 +57,14 @@ func (c *console) Destroy(consoleID string) (*ConsoleDestroyRes, error) {
 }
 
 type ConsoleListReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ConsoleListRes map[string][]struct {
-	ID     string `msgpack:"id"`
-	Prompt string `msgpack:"prompt"`
-	Busy   bool   `msgpack:"busy"`
+	ID     string `msgpack:"id" json:"id"`
+	Prompt string `msgpack:"prompt" json:"prompt"`
+	Busy   bool   `msgpack:"busy" json:"busy"`
 }
 
 // List returns a list of framework consoles
@@ -83,15 +83,15 @@ func (c *console) List() (*ConsoleListRes, error) {
 }
 
 type ConsoleReadReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
 }
 
 type ConsoleReadRes struct {
-	Data   string `msgpack:"data"`
-	Prompt string `msgpack:"prompt"`
-	Busy   bool   `msgpack:"busy"`
+	Data   string `msgpack:"data" json:"data"`
+	Prompt string `msgpack:"prompt" json:"prompt"`
+	Busy   bool   `msgpack:"busy" json:"busy"`
 }
 
 // Read returns the framework console output in raw form
@@ -111,13 +111,13 @@ func (c *console) Read(consoleID string) (*ConsoleReadRes, error) {
 }
 
 type ConsoleSessionDetachReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
 }
 
 type ConsoleSessionDetachRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // SessionDetach detaches a framework session
@@ -137,13 +137,13 @@ func (c *console) SessionDetach(consoleID string) (*ConsoleSessionDetachRes, err
 }
 
 type ConsoleSessionKillReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
 }
 
 type ConsoleSessionKillRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // SessionKill kills a framework session
@@ -163,10 +163,10 @@ func (c *console) SessionKill(consoleID string) (*ConsoleSessionKillRes, error) 
 }
 
 type ConsoleTabsReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
-	InputLine string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
+	InputLine string `json:"input_line"`
 }
 
 type ConsoleTabsRes struct {
@@ -191,14 +191,14 @@ func (c *console) Tabs(consoleID, line string) (*ConsoleTabsRes, error) {
 }
 
 type ConsoleWriteReq struct {
-	Method    string
-	Token     string
-	ConsoleID string
-	Command   string
+	Method    string `json:"method"`
+	Token     string `json:"token"`
+	ConsoleID string `json:"console_id"`
+	Command   string `json:"command"`
 }
 
 type ConsoleWriteRes struct {
-	Wrote uint32 `msgpack:"wrote"`
+	Wrote uint32 `msgpack:"wrote" json:"wrote"`
 }
 
 // Write sends an input (such as a command) to the framework console

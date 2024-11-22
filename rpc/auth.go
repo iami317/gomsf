@@ -5,14 +5,14 @@ type auth struct {
 }
 
 type AuthLoginReq struct {
-	Method   string
-	Username string // The username
-	Password string // The password
+	Method   string `json:"method"`
+	Username string `json:"username"` // The username
+	Password string `json:"password"` // The password
 }
 
 type AuthLoginRes struct {
-	Result Result `msgpack:"result"`
-	Token  string `msgpack:"token"`
+	Result Result `msgpack:"result" json:"result"`
+	Token  string `msgpack:"token" json:"token"`
 }
 
 // Login handles client authentication
@@ -32,12 +32,12 @@ func (a *auth) Login(user, pass string) (*AuthLoginRes, error) {
 }
 
 type AuthLogoutReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type AuthLogoutRes struct {
-	Result Result `msgpack:"result"`
+	Result Result `msgpack:"result" json:"result"`
 }
 
 // Logout handles client deauthentication
@@ -56,12 +56,12 @@ func (a *auth) Logout() (*AuthLogoutRes, error) {
 }
 
 type AuthTokenListReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type AuthTokenListRes struct {
-	Tokens []string `msgpack:"tokens"`
+	Tokens []string `msgpack:"tokens" json:"tokens"`
 }
 
 // TokenList returns a list of authentication tokens, including the ones that are temporary, permanent, or stored in the backend

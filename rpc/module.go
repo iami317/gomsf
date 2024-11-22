@@ -4,8 +4,8 @@ type module struct {
 	rpc *RPC
 }
 type ModuleArchitecturesReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleArchitecturesRes []string
@@ -26,12 +26,12 @@ func (m *module) Architectures() (*ModuleArchitecturesRes, error) {
 }
 
 type ModuleAuxiliaryReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleAuxiliaryRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 // ModuleAuxiliary returns a list of auxiliary module names
@@ -50,11 +50,11 @@ func (m *module) Auxiliary() (*ModuleAuxiliaryRes, error) {
 }
 
 type ModuleCheckReq struct {
-	Method     string
-	Token      string
-	ModuleType string
-	ModuleName string
-	Options    map[string]string
+	Method     string            `json:"method"`
+	Token      string            `json:"token"`
+	ModuleType string            `json:"module_type"`
+	ModuleName string            `json:"module_name"`
+	Options    map[string]string `json:"options"`
 }
 
 func (m *module) Check(moduleType, moduleName string, options map[string]string) error {
@@ -74,12 +74,12 @@ func (m *module) Check(moduleType, moduleName string, options map[string]string)
 }
 
 type ModuleExploitsReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleExploitsRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (m *module) Exploits() (*ModuleExploitsRes, error) {
@@ -97,14 +97,14 @@ func (m *module) Exploits() (*ModuleExploitsRes, error) {
 }
 
 type ModuleCompatibleEvasionPayloadsReq struct {
-	Method     string
-	Token      string
-	ModuleName string
-	Target     int
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleName string `json:"module_name"`
+	Target     int    `json:"target"`
 }
 
 type ModuleCompatibleEvasionPayloadsRes struct {
-	Payloads []string `msgpack:"payloads"`
+	Payloads []string `msgpack:"payloads" json:"payloads"`
 }
 
 // CompatiblePayloads returns the compatible target-specific payloads for an evasion module
@@ -125,14 +125,14 @@ func (m *module) CompatibleEvasionPayloads(moduleName string, target int) (*Modu
 }
 
 type ModuleCompatiblePayloadsReq struct {
-	Method     string
-	Token      string
-	ModuleName string
-	Target     int
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleName string `json:"module_name"`
+	Target     int    `json:"target"`
 }
 
 type ModuleCompatiblePayloadsRes struct {
-	Payloads []string `msgpack:"payloads"`
+	Payloads []string `msgpack:"payloads" json:"payloads"`
 }
 
 // CompatiblePayloads returns the compatible payloads for a specific exploit
@@ -153,13 +153,13 @@ func (m *module) CompatiblePayloads(moduleName string, target int) (*ModuleCompa
 }
 
 type ModuleCompatibleSessionsReq struct {
-	Method     string
-	Token      string
-	ModuleName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleName string `json:"module_name"`
 }
 
 type ModuleCompatibleSessionsRes struct {
-	Sessions []string `msgpack:"sessions"`
+	Sessions []string `msgpack:"sessions" json:"sessions"`
 }
 
 // ModuleCompatibleSessions returns the compatible sessions for a specific post module
@@ -179,15 +179,15 @@ func (m *module) CompatibleSessions(moduleName string) (*ModuleCompatibleSession
 }
 
 type ModuleEncodeReq struct {
-	Method        string
-	Token         string
-	Data          string
-	EncoderModule string
-	Options       map[string]string
+	Method        string            `json:"method"`
+	Token         string            `json:"token"`
+	Data          string            `json:"data"`
+	EncoderModule string            `json:"encoder_module"`
+	Options       map[string]string `json:"options"`
 }
 
 type ModuleEncodeRes struct {
-	Encoded []byte `msgpack:"encoded"`
+	Encoded []byte `msgpack:"encoded" json:"encoded"`
 }
 
 // Encode encodes data with an encoder
@@ -209,12 +209,12 @@ func (m *module) Encode(data, encoderModule string, options map[string]string) (
 }
 
 type ModulePostReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModulePostRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (m *module) Post() (*ModulePostRes, error) {
@@ -232,12 +232,12 @@ func (m *module) Post() (*ModulePostRes, error) {
 }
 
 type ModulePayloadsReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModulePayloadsRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (m *module) Payloads() (*ModulePayloadsRes, error) {
@@ -255,8 +255,8 @@ func (m *module) Payloads() (*ModulePayloadsRes, error) {
 }
 
 type ModulePlatformsReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModulePlatformsRes []string
@@ -277,12 +277,12 @@ func (m *module) Platforms() (*ModulePlatformsRes, error) {
 }
 
 type ModuleEncodersReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleEncodersRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (m *module) Encoders() (*ModuleEncodersRes, error) {
@@ -300,8 +300,8 @@ func (m *module) Encoders() (*ModuleEncodersRes, error) {
 }
 
 type ModuleEncryptionFormatsReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleEncryptionFormatsRes []string
@@ -321,8 +321,8 @@ func (m *module) EncryptionFormats() (*ModuleEncryptionFormatsRes, error) {
 }
 
 type ModuleEvasionReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleEvasionRes struct {
@@ -344,12 +344,12 @@ func (m *module) Evasion() (*ModuleEvasionRes, error) {
 }
 
 type ModuleNopsReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type ModuleNopsRes struct {
-	Modules []string `msgpack:"modules"`
+	Modules []string `msgpack:"modules" json:"modules"`
 }
 
 func (m *module) Nops() (*ModuleNopsRes, error) {
@@ -367,21 +367,21 @@ func (m *module) Nops() (*ModuleNopsRes, error) {
 }
 
 type ModuleInfoReq struct {
-	Method     string
-	Token      string
-	ModuleType string
-	ModuleName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleType string `json:"module_type"`
+	ModuleName string `json:"module_name"`
 }
 
 type ModuleInfoRes struct {
-	Name        string     `msgpack:"name"`
-	Description string     `msgpack:"description"`
-	License     string     `msgpack:"license"`
-	FilePath    string     `msgpack:"filepath"`
-	Version     string     `msgpack:"version"`
-	Rank        string     `msgpack:"rank"`
-	References  [][]string `msgpack:"references"`
-	Authors     []string   `msgpack:"authors"`
+	Name        string     `msgpack:"name" json:"name"`
+	Description string     `msgpack:"description" json:"description"`
+	License     string     `msgpack:"license" json:"license"`
+	FilePath    string     `msgpack:"filepath" json:"filePath"`
+	Version     string     `msgpack:"version" json:"version"`
+	Rank        string     `msgpack:"rank" json:"rank"`
+	References  [][]string `msgpack:"references" json:"references"`
+	Authors     []string   `msgpack:"authors" json:"authors"`
 }
 
 // Info returns the metadata for a module
@@ -402,10 +402,10 @@ func (m *module) Info(moduleType, moduleName string) (*ModuleInfoRes, error) {
 }
 
 type ModuleInfoHTMLReq struct {
-	Method     string
-	Token      string
-	ModuleType string
-	ModuleName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleType string `json:"module_type"`
+	ModuleName string `json:"module_name"`
 }
 
 type ModuleInfoHTMLRes string
@@ -428,20 +428,20 @@ func (m *module) InfoHTML(moduleType, moduleName string) (*ModuleInfoHTMLRes, er
 }
 
 type ModuleOptionsReq struct {
-	Method     string
-	Token      string
-	ModuleType string
-	ModuleName string
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleType string `json:"module_type"`
+	ModuleName string `json:"module_name"`
 }
 
 type ModuleOptionsRes map[string]struct {
-	Type     string      `msgpack:"type"`
-	Required bool        `msgpack:"required"`
-	Advanced bool        `msgpack:"advanced"`
-	Evasion  bool        `msgpack:"evasion"`
-	Desc     string      `msgpack:"desc"`
-	Default  interface{} `msgpack:"default"`
-	Enums    []string    `msgpack:"enums,omitempty"`
+	Type     string      `msgpack:"type" json:"type"`
+	Required bool        `msgpack:"required" json:"required"`
+	Advanced bool        `msgpack:"advanced" json:"advanced"`
+	Evasion  bool        `msgpack:"evasion" json:"evasion"`
+	Desc     string      `msgpack:"desc" json:"desc"`
+	Default  interface{} `msgpack:"default" json:"default"`
+	Enums    []string    `msgpack:"enums,omitempty" json:"enums"`
 }
 
 func (m *module) Options(moduleType, moduleName string) (*ModuleOptionsRes, error) {
@@ -461,14 +461,14 @@ func (m *module) Options(moduleType, moduleName string) (*ModuleOptionsRes, erro
 }
 
 type ModuleTargetCompatiblePayloadsReq struct {
-	Method     string
-	Token      string
-	ModuleName string
-	ArchNumber uint32
+	Method     string `json:"method"`
+	Token      string `json:"token"`
+	ModuleName string `json:"module_name"`
+	ArchNumber uint32 `json:"arch_number"`
 }
 
 type ModuleTargetCompatiblePayloadsRes struct {
-	Payloads []string `msgpack:"payloads"`
+	Payloads []string `msgpack:"payloads" json:"payloads"`
 }
 
 func (m *module) TargetCompatiblePayloads(moduleName string, targetNumber uint32) (*ModuleTargetCompatiblePayloadsRes, error) {
@@ -488,16 +488,16 @@ func (m *module) TargetCompatiblePayloads(moduleName string, targetNumber uint32
 }
 
 type ModuleExecuteReq struct {
-	Method     string
-	Token      string
-	ModuleType string
-	ModuleName string
-	Options    map[string]string
+	Method     string            `json:"method"`
+	Token      string            `json:"token"`
+	ModuleType string            `json:"module_type"`
+	ModuleName string            `json:"module_name"`
+	Options    map[string]string `json:"options"`
 }
 
 type ModuleExecuteRes struct {
-	JobID uint32 `msgpack:"job_id"`
-	UUID  string `msgpack:"uuid"`
+	JobID uint32 `msgpack:"job_id" json:"job_id"`
+	UUID  string `msgpack:"uuid" json:"uuid"`
 }
 
 func (m *module) Execute(moduleType, moduleName string, options map[string]string) (*ModuleExecuteRes, error) {

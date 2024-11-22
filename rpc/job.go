@@ -5,17 +5,17 @@ type job struct {
 }
 
 type JobInfoReq struct {
-	Method string
-	Token  string
-	JobID  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
+	JobID  string `json:"job_id"`
 }
 
 type JobInfoRes struct {
-	JobID     int                    `msgpack:"jid"`
-	Name      string                 `msgpack:"name"`
-	StartTime int                    `msgpack:"start_time"`
-	URIPath   interface{}            `msgpack:"uripath,omitempty"`
-	Datastore map[string]interface{} `msgpack:"datastore,omitempty"`
+	JobID     int                    `msgpack:"jid" json:"job_id"`
+	Name      string                 `msgpack:"name" json:"name"`
+	StartTime int                    `msgpack:"start_time" json:"start_time"`
+	URIPath   interface{}            `msgpack:"uripath,omitempty" json:"uripath,omitempty"`
+	Datastore map[string]interface{} `msgpack:"datastore,omitempty" json:"datastore,omitempty"`
 }
 
 // Info returns information about a job
@@ -35,8 +35,8 @@ func (j *job) Info(jobID string) (*JobInfoRes, error) {
 }
 
 type JobListReq struct {
-	Method string
-	Token  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
 }
 
 type JobListRes map[string]string
@@ -57,9 +57,9 @@ func (j *job) List() (*JobListRes, error) {
 }
 
 type JobStopReq struct {
-	Method string
-	Token  string
-	JobID  string
+	Method string `json:"method"`
+	Token  string `json:"token"`
+	JobID  string `json:"job_id"`
 }
 
 type JobStopRes struct {

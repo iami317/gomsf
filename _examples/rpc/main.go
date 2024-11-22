@@ -33,7 +33,9 @@ func main() {
 	//encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
 	//	Format: "c",
 	//})
+
 	exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
-	detail := exploit.OptionsDetail()
-	fmt.Printf("%#v", detail)
+	options := exploit.Options()
+	//detail := exploit.OptionsDetail()
+	fmt.Printf("%#v", options)
 }

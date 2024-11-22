@@ -1,6 +1,7 @@
 package gomsf
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/fatih/structs"
@@ -26,9 +27,18 @@ func (mm *moduleMeta) OptionsDetail() *rpc.ModuleOptionsRes {
 	return mm.options
 }
 
+type OptionsSimple struct {
+}
+
+func (mm *moduleMeta) OptionsSimple() *rpc.ModuleOptionsRes {
+	return mm.options
+}
+
 func (mm *moduleMeta) Options() []string {
 	keys := make([]string, 0, len(*mm.options))
-	for k := range *mm.options {
+	for k, v := range *mm.options {
+		bb, _ := json.Marshal(v)
+		fmt.Println(k, "=>", string(bb))
 		keys = append(keys, k)
 	}
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/iami317/gomsf"
 )
 
@@ -21,44 +20,20 @@ func main() {
 		panic(err)
 	}
 
-	/*
-		version, err := client.Core.Version()
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println(version.String())
-		return
-
-		encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
-			Format: "c",
-		})
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("'AAAA' encoded with shikata_ga_nai:")
-		fmt.Printf("%s\n", encoded)
-	*/
-	//获取利用列表
-	exploits, _ := client.Module.Exploits()
-	for _, exploit := range exploits {
-		fmt.Println(exploit)
-	}
-	//exploit, err := client.Module.UseExploit("unix/ftp/vsftpd_234_backdoor")
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//fmt.Println(exploit.Options())
-	//fmt.Println(exploit.Required())
-
-	//info, err := client.Module.InfoHTML(gomsf.ExploitType, "windows/smb/ms08_067_netapi")
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//fmt.Printf(info)
-	//fmt.Printf("Rank: %s\n", info.Rank)
-	//fmt.Println(exploit.Payloads())
+	//version, err := client.Core.Version()
+	//exploits, err := client.Module.Exploits()
+	//architectures, err := client.Module.Architectures()
+	//platforms, err := client.Module.Platforms()
+	//payloads, err := client.Module.Payloads()
+	//posts, err := client.Module.Posts()
+	//auxiliaries, err := client.Module.Auxiliaries()
+	//nops, err := client.Module.Nops()
+	//evasions, err := client.Module.Evasions()
+	//moduleInfo, err := client.Module.Info(gomsf.PayloadType, "windows/meterpreter/reverse_tcp")
+	//encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
+	//	Format: "c",
+	//})
+	exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
+	detail := exploit.OptionsDetail()
+	fmt.Printf("%#v", detail)
 }

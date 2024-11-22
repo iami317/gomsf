@@ -34,7 +34,7 @@ type ModuleAuxiliaryRes struct {
 	Modules []string `msgpack:"modules" json:"modules"`
 }
 
-// ModuleAuxiliary returns a list of auxiliary module names
+// Auxiliary 返回一个辅助模块名称列表
 func (m *module) Auxiliary() (*ModuleAuxiliaryRes, error) {
 	req := &ModuleAuxiliaryReq{
 		Method: "module.auxiliary",
@@ -261,7 +261,7 @@ type ModulePlatformsReq struct {
 
 type ModulePlatformsRes []string
 
-// Platforms returns a list of platform names
+// Platforms 返回一个平台名称列表
 func (m *module) Platforms() (*ModulePlatformsRes, error) {
 	req := &ModulePlatformsReq{
 		Method: "module.platforms",
@@ -329,6 +329,7 @@ type ModuleEvasionRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
+// Evasion 反杀毒软件的木马
 func (m *module) Evasion() (*ModuleEvasionRes, error) {
 	req := &ModuleEvasionReq{
 		Method: "module.evasion",
@@ -352,6 +353,7 @@ type ModuleNopsRes struct {
 	Modules []string `msgpack:"modules" json:"modules"`
 }
 
+// Nops 空指令模块
 func (m *module) Nops() (*ModuleNopsRes, error) {
 	req := &ModuleNopsReq{
 		Method: "module.nops",
@@ -384,7 +386,7 @@ type ModuleInfoRes struct {
 	Authors     []string   `msgpack:"authors" json:"authors"`
 }
 
-// Info returns the metadata for a module
+// Info 返回模块的元数据
 func (m *module) Info(moduleType, moduleName string) (*ModuleInfoRes, error) {
 	req := &ModuleInfoReq{
 		Method:     "module.info",
@@ -410,7 +412,7 @@ type ModuleInfoHTMLReq struct {
 
 type ModuleInfoHTMLRes string
 
-// InfoHTML returns detailed information about a module in HTML
+// InfoHTML 返回关于HTML中模块的详细信息
 func (m *module) InfoHTML(moduleType, moduleName string) (*ModuleInfoHTMLRes, error) {
 	req := &ModuleInfoHTMLReq{
 		Method:     "module.info_html",
@@ -441,7 +443,7 @@ type ModuleOptionsRes map[string]struct {
 	Evasion  bool        `msgpack:"evasion" json:"evasion"`
 	Desc     string      `msgpack:"desc" json:"desc"`
 	Default  interface{} `msgpack:"default" json:"default"`
-	Enums    []string    `msgpack:"enums,omitempty" json:"enums"`
+	Enums    []string    `msgpack:"enums,omitempty" json:"enums,omitempty"`
 }
 
 func (m *module) Options(moduleType, moduleName string) (*ModuleOptionsRes, error) {
@@ -500,6 +502,10 @@ type ModuleExecuteRes struct {
 	UUID  string `msgpack:"uuid" json:"uuid"`
 }
 
+/*
+//moduleType exploit auxiliary post payload evasion
+//moduleName windows/smb/ms08_067_netapi
+*/
 func (m *module) Execute(moduleType, moduleName string, options map[string]string) (*ModuleExecuteRes, error) {
 	req := &ModuleExecuteReq{
 		Method:     "module.execute",

@@ -64,7 +64,7 @@ type AuthTokenListRes struct {
 	Tokens []string `msgpack:"tokens" json:"tokens"`
 }
 
-// TokenList returns a list of authentication tokens, including the ones that are temporary, permanent, or stored in the backend
+// TokenList 返回一个身份验证令牌列表，包括临时的、永久的或存储在后端的令牌
 func (m *module) TokenList(moduleName string, target int) (*AuthTokenListRes, error) {
 	req := &AuthTokenListReq{
 		Method: "auth.token_list",

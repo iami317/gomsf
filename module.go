@@ -22,6 +22,10 @@ type moduleMeta struct {
 	options *rpc.ModuleOptionsRes
 }
 
+func (mm *moduleMeta) OptionsDetail() *rpc.ModuleOptionsRes {
+	return mm.options
+}
+
 func (mm *moduleMeta) Options() []string {
 	keys := make([]string, 0, len(*mm.options))
 	for k := range *mm.options {
@@ -198,6 +202,7 @@ func (mm *ModuleManager) Encode(data string, encoderModule string, options *Enco
 	return r.Encoded, nil
 }
 
+// Exploits 渗透攻击模块
 func (mm *ModuleManager) Exploits() ([]string, error) {
 	r, err := mm.rpc.Module.Exploits()
 	if err != nil {
@@ -216,6 +221,7 @@ func (mm *ModuleManager) Evasions() ([]string, error) {
 	return r.Modules, nil
 }
 
+// Payloads 攻击载荷模块
 func (mm *ModuleManager) Payloads() ([]string, error) {
 	r, err := mm.rpc.Module.Payloads()
 	if err != nil {
@@ -234,6 +240,7 @@ func (mm *ModuleManager) Auxiliaries() ([]string, error) {
 	return r.Modules, nil
 }
 
+// Posts 后渗透模块
 func (mm *ModuleManager) Posts() ([]string, error) {
 	r, err := mm.rpc.Module.Post()
 	if err != nil {

@@ -107,7 +107,7 @@ type ModuleCompatibleEvasionPayloadsRes struct {
 	Payloads []string `msgpack:"payloads" json:"payloads"`
 }
 
-// CompatiblePayloads returns the compatible target-specific payloads for an evasion module
+// CompatibleEvasionPayloads returns the compatible target-specific payloads for an evasion module
 func (m *module) CompatibleEvasionPayloads(moduleName string, target int) (*ModuleCompatibleEvasionPayloadsRes, error) {
 	req := &ModuleCompatibleEvasionPayloadsReq{
 		Method:     "module.compatible_evasion_payloads",

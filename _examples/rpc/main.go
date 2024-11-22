@@ -44,15 +44,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(exploit.)
+
 	fmt.Println(exploit.Options())
 	fmt.Println(exploit.Required())
 
-	info, err := client.Module.Info(gomsf.ExploitType, "windows/smb/ms08_067_netapi")
+	info, err := client.Module.InfoHTML(gomsf.ExploitType, "windows/smb/ms08_067_netapi")
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("Name: %s\n", info.Name)
-	fmt.Printf("Rank: %s\n", info.Rank)
+	fmt.Printf(info)
+	//fmt.Printf("Rank: %s\n", info.Rank)
 }

@@ -1,5 +1,7 @@
 package rpc
 
+import "fmt"
+
 type module struct {
 	rpc *RPC
 }
@@ -500,6 +502,10 @@ type ModuleExecuteReq struct {
 type ModuleExecuteRes struct {
 	JobID uint32 `msgpack:"job_id" json:"job_id"`
 	UUID  string `msgpack:"uuid" json:"uuid"`
+}
+
+func (mer ModuleExecuteRes) String() string {
+	return fmt.Sprintf("job_id:%v uuid:%v", mer.JobID, mer.UUID)
 }
 
 /*

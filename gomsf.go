@@ -22,6 +22,7 @@ type Client struct {
 	Plugins    *PluginManager
 	Jobs       *JobManager
 	Module     *ModuleManager
+	Session    *SessionManager
 }
 
 type ClientOptions struct {
@@ -67,6 +68,7 @@ func New(address string, optFns ...func(o *ClientOptions)) (*Client, error) {
 		Jobs:       &JobManager{rpc: rpc},
 		Module:     &ModuleManager{rpc: rpc},
 		Plugins:    &PluginManager{rpc: rpc},
+		Session:    &SessionManager{rpc: rpc},
 	}
 
 	return c, nil

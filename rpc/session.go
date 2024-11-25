@@ -1,5 +1,7 @@
 package rpc
 
+import "encoding/json"
+
 type session struct {
 	rpc *RPC
 }
@@ -125,6 +127,11 @@ type SessionListRes map[uint32]struct {
 	ExploitUUID string `msgpack:"exploit_uuid" json:"exploit_uuid"`
 }
 
+func (slr SessionListRes) String() string {
+	bb, _ := json.Marshal(slr)
+	return string(bb)
+}
+
 func (s *session) List() (SessionListRes, error) {
 	req := &SessionListReq{
 		Method: "session.list",
@@ -137,6 +144,31 @@ func (s *session) List() (SessionListRes, error) {
 	}
 
 	return res, nil
+}
+
+type SessionStopRes struct {
+	Result Result `msgpack:"result"`
+}
+
+type SessionStopReq struct {
+	Method string `json:"method"`
+	Token  string `json:"token"`
+	Sid    int    `json:"sid"`
+}
+
+func (s *session) Stop(sid int) (string, error) {
+	req := &SessionStopReq{
+		Method: "session.stop",
+		Token:  s.rpc.Token(),
+		Sid:    sid,
+	}
+
+	var res SessionStopRes
+	if err := s.rpc.Call(req, &res); err != nil {
+		return "", err
+	}
+
+	return string(res.Result), nil
 }
 
 type SessionShellWriteReq struct {

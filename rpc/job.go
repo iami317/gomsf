@@ -1,5 +1,7 @@
 package rpc
 
+import "encoding/json"
+
 type job struct {
 	rpc *RPC
 }
@@ -16,6 +18,11 @@ type JobInfoRes struct {
 	StartTime int                    `msgpack:"start_time" json:"start_time"`
 	URIPath   interface{}            `msgpack:"uripath,omitempty" json:"uripath,omitempty"`
 	Datastore map[string]interface{} `msgpack:"datastore,omitempty" json:"datastore,omitempty"`
+}
+
+func (Jir JobInfoRes) String() string {
+	bb, _ := json.Marshal(Jir)
+	return string(bb)
 }
 
 // Info returns information about a job

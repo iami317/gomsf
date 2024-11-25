@@ -25,25 +25,6 @@ func (mm *moduleMeta) OptionsDetail() *rpc.ModuleOptionsRes {
 	return mm.options
 }
 
-var OptionsSimple = map[string][]string{
-	"module": {
-		"Proxies",
-		"RHOSTS",
-		"RPORT",
-		"SSL",
-		"SSLCert",
-		"TARGETURI",
-		"URIPATH",
-		"VHOST",
-		"SRVHOST",
-		"SRVPORT",
-	},
-	"payload": {
-		"LHOST",
-		"LPORT",
-	},
-}
-
 type OptionsParam struct {
 	Type     string      `json:"type"`
 	Required bool        `json:"required"`
@@ -277,6 +258,7 @@ func (mm *ModuleManager) Posts() ([]string, error) {
 	return r.Modules, nil
 }
 
+// 空指令
 func (mm *ModuleManager) Nops() ([]string, error) {
 	r, err := mm.rpc.Module.Nops()
 	if err != nil {

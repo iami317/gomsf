@@ -1,6 +1,9 @@
 package rpc
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type module struct {
 	rpc *RPC
@@ -386,6 +389,16 @@ type ModuleInfoRes struct {
 	Rank        string     `msgpack:"rank" json:"rank"`
 	References  [][]string `msgpack:"references" json:"references"`
 	Authors     []string   `msgpack:"authors" json:"authors"`
+	//Privileged    bool       `msgpack:"privileged" json:"privileged"`
+	//DefaultTarget int        `msgpack:"default_target" json:"default_target"`
+	//Arch           string     `msgpack:"arch" json:"arch"`
+	DisclosureDate string   `msgpack:"disclosure_date" json:"disclosure_date"`
+	Platform       []string `msgpack:"platform" json:"platform"`
+}
+
+func (mir ModuleInfoRes) String() string {
+	bb, _ := json.Marshal(mir)
+	return string(bb)
 }
 
 // Info 返回模块的元数据
@@ -396,7 +409,6 @@ func (m *module) Info(moduleType, moduleName string) (*ModuleInfoRes, error) {
 		ModuleType: moduleType,
 		ModuleName: moduleName,
 	}
-
 	var res *ModuleInfoRes
 	if err := m.rpc.Call(req, &res); err != nil {
 		return nil, err

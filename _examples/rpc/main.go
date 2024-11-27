@@ -1,10 +1,30 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/iami317/gomsf"
+	"strings"
 	"time"
 )
+
+type ExpInfo struct {
+	Id         string   `json:"id"`
+	Name       string   `json:"name"`
+	VulId      string   `json:"vul_id"`
+	VulCode    []string `json:"vul_code"`
+	Tags       []string `json:"tags"`
+	VulPort    string   `json:"vul_port"`
+	CaseId     string   `json:"case_id"`
+	ExecMethod int      `json:"exec_method"`
+	PlatForm   []string `json:"plat_form"`
+	Rank       string   `json:"rank"`
+}
+
+func (ei ExpInfo) String() string {
+	bb, _ := json.Marshal(ei)
+	return string(bb)
+}
 
 func main() {
 	client, err := gomsf.New("0.0.0.0:55553")
@@ -23,16 +43,46 @@ func main() {
 
 	//version, err := client.Core.Version()
 	exploits, err := client.Module.Exploits()
-	for i, exploit := range exploits {
+	for _, exploit := range exploits {
 		//fmt.Println(exploit)
+		expInfo := ExpInfo{}
 		if len(exploit) > 0 {
 			moduleInfo, err := client.Module.Info(gomsf.ExploitType, exploit)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
-			fmt.Println(i, exploit, moduleInfo.String())
-			time.Sleep(time.Millisecond * 20)
+			expInfo.Name = moduleInfo.Name
+			//expInfo.Tags =
+			expInfo.ExecMethod = 2
+			expInfo.Rank = moduleInfo.Rank
+			if len(moduleInfo.Platform) > 0 {
+				for _, s := range moduleInfo.Platform {
+					sss := strings.Split(s, "::")
+					expInfo.PlatForm = append(expInfo.PlatForm, strings.ToLower(sss[len(sss)-1]))
+				}
+			}
+			if len(moduleInfo.References) > 0 {
+				for _, reference := range moduleInfo.References {
+					if len(reference) >= 2 && strings.Contains(reference[0], "CVE") {
+						expInfo.VulCode = append(expInfo.VulCode, fmt.Sprintf("%v-%v", reference[0], reference[1]))
+					}
+				}
+			}
+			if len(moduleInfo.FilePath) > 0 {
+				chunks := strings.Split(moduleInfo.FilePath, "/")
+				//fmt.Println("-------", chunks)
+				if len(chunks) >= 10 {
+					//ss := strings.Split(strings.TrimLeft(chunks[9], ".rb"), "_")
+					//ss := strings.TrimLeft(chunks[9], ".rb")
+					expInfo.Tags = append(expInfo.Tags, chunks[7])
+					expInfo.Tags = append(expInfo.Tags, chunks[8])
+					//expInfo.Tags = append(expInfo.Tags, ss)
+				}
+			}
+			//fmt.Println(moduleInfo.String())
+			fmt.Println(expInfo.String())
+			time.Sleep(time.Millisecond * 10)
 		}
 	}
 	//architectures, err := client.Module.Architectures()

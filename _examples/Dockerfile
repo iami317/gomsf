@@ -29,5 +29,5 @@ EXPOSE 55553
 EXPOSE 58554
 EXPOSE 58080
 
-
-CMD ["sh","-c","/usr/bin/msfrpcd -U msf -P 123456 && tail -f /dev/null"]
+#docker run --name hz-ms -p 58080:58080 -p 58554:58554 -p 55553:55553 -d hz-ms:v1.0.20
+CMD ["sh","-c","/usr/bin/msfrpcd -U hz-msf -P 79KsCyTqPizo0e3apj6M && tail -f /dev/null"]

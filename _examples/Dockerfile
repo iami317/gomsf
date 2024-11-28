@@ -21,15 +21,13 @@ RUN ln -s /opt/metasploit-framework/bin/* /usr/bin/
 RUN apt-get update && apt-get install -y pwgen nmap iproute2 telnet netcat-openbsd net-tools iputils-ping dnsutils \
 	&& rm -rf /var/lib/apt/lists/*
 
-FROM base AS test
-CMD ["msfconsole", "--version"]
 
 FROM base
 LABEL maintainer=heywoodlh
-VOLUME /root/.msf4
 
 EXPOSE 55553
 EXPOSE 58554
 EXPOSE 58080
 
-CMD ["/bin/bash","-c","msfrpcd -U msf -P 123456"]
+
+CMD ["sh","-c","/usr/bin/msfrpcd -U msf -P 123456 && tail -f /dev/null"]

@@ -27,7 +27,7 @@ func (ei ExpInfo) String() string {
 }
 
 func main() {
-	client, err := gomsf.New("0.0.0.0:55553")
+	client, err := gomsf.New("192.168.110.33:55553")
 	if err != nil {
 		panic(err)
 	}
@@ -44,7 +44,8 @@ func main() {
 	//version, err := client.Core.Version()
 	exploits, err := client.Module.Exploits()
 	for _, exploit := range exploits {
-		//fmt.Println(exploit)
+		fmt.Println(exploit)
+		continue
 		expInfo := ExpInfo{}
 		if len(exploit) > 0 {
 			moduleInfo, err := client.Module.Info(gomsf.ExploitType, exploit)
@@ -85,6 +86,7 @@ func main() {
 			time.Sleep(time.Millisecond * 10)
 		}
 	}
+	fmt.Println(len(exploits))
 	//architectures, err := client.Module.Architectures()
 	//platforms, err := client.Module.Platforms()
 	//payloads, err := client.Module.Payloads()

@@ -27,12 +27,12 @@ func (ei ExpInfo) String() string {
 }
 
 func main() {
-	client, err := gomsf.New("192.168.110.33:55553")
+	client, err := gomsf.New("192.168.100.145:55553")
 	if err != nil {
 		panic(err)
 	}
 
-	if err = client.Login("msf", "123456"); err != nil {
+	if err = client.Login("hz-msf", "79KsCyTqPizo0e3apj6M"); err != nil {
 		panic(err)
 	}
 	defer client.Logout()

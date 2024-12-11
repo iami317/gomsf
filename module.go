@@ -14,6 +14,8 @@ const (
 	PostType      ModuleType = "post"
 	PayloadType   ModuleType = "payload"
 	EvasionType   ModuleType = "evasion"
+	EncoderType   ModuleType = "encoder"
+	NopType       ModuleType = "nop"
 )
 
 type moduleMeta struct {

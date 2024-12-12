@@ -27,7 +27,7 @@ func (ei ExpInfo) String() string {
 }
 
 func main() {
-	client, err := gomsf.New("192.168.100.145:55553")
+	client, err := gomsf.New("127.0.0.1:55553")
 	if err != nil {
 		panic(err)
 	}

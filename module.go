@@ -166,6 +166,10 @@ func (mm *ModuleManager) Info(moduleType ModuleType, moduleName string) (*rpc.Mo
 	return mm.rpc.Module.Info(string(moduleType), moduleName)
 }
 
+func (mm *ModuleManager) Options(moduleType ModuleType, moduleName string) (*rpc.ModuleOptionsRes, error) {
+	return mm.rpc.Module.Options(string(moduleType), moduleName)
+}
+
 func (mm *ModuleManager) InfoHTML(moduleType ModuleType, moduleName string) (string, error) {
 	r, err := mm.rpc.Module.InfoHTML(string(moduleType), moduleName)
 	if err != nil {

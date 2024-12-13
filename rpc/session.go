@@ -125,6 +125,9 @@ type SessionListRes map[uint32]struct {
 	Username    string `msgpack:"username" json:"username"`
 	UUID        string `msgpack:"uuid" json:"uuid"`
 	ExploitUUID string `msgpack:"exploit_uuid" json:"exploit_uuid"`
+	Routes      string `msgpack:"routes" json:"routes"`
+	Arch        string `msgpack:"arch" json:"arch"`
+	Platform    string `msgpack:"platform" json:"platform"`
 }
 
 func (slr SessionListRes) String() string {

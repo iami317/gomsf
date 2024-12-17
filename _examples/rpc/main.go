@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/iami317/gomsf"
 )
 
@@ -33,12 +34,15 @@ func main() {
 		panic(err)
 	}
 	defer client.Logout()
-	//client.Session.Write(7, "whoami")
-	//client.Session.Write(7, "shell")
+	client.Session.Write(7, "shell")
+	client.Session.Write(7, "whoami")
+	fmt.Println(client.Session.Read(7))
 	//time.Sleep(time.Second)
-	client.Session.Write(7, "curl --version")
-	client.Session.Read(7)
-
+	//client.Session.Write(7, "uname -a")
+	//fmt.Println(client.Session.Read(7))
+	fmt.Println(client.Session.SessionKill(7))
+	client.Session.Write(7, "sysinfo")
+	fmt.Println(client.Session.Read(7))
 	//sessionList, _ := client.Session.List()
 	//bb, _ := json.Marshal(sessionList)
 	//fmt.Println(string(bb))

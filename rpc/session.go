@@ -286,7 +286,6 @@ func (s *session) MeterpreterSessionDetach(session int) (SessionMeterpreterDetac
 	if err := s.rpc.Call(req, &res); err != nil {
 		return SessionMeterpreterDetachRes{}, err
 	}
-
 	return res, nil
 }
 

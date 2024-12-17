@@ -38,7 +38,9 @@ func (s *SessionManager) Write(sid int, command string) error {
 	if r.Result == rpc.FAILURE {
 		return fmt.Errorf("cannot write command %s to session %d", command, sid)
 	}
-
+	if strings.Contains(command, "shell") {
+		time.Sleep(time.Millisecond * 200)
+	}
 	return nil
 }
 

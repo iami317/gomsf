@@ -1,6 +1,8 @@
 package rpc
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type session struct {
 	rpc *RPC
@@ -197,7 +199,6 @@ func (s *session) ShellWrite(session int, command string) error {
 	if err := s.rpc.Call(req, &res); err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -225,7 +226,6 @@ func (s *session) ShellRead(session int, readPointer uint32) (string, error) {
 	if err := s.rpc.Call(req, &res); err != nil {
 		return "", err
 	}
-
 	return res.Data, nil
 }
 
@@ -256,7 +256,6 @@ func (s *session) MeterpreterRead(session int) (SessionMeterpreterReadRes, error
 	if err := s.rpc.Call(req, &res); err != nil {
 		return SessionMeterpreterReadRes{}, err
 	}
-
 	return res, nil
 }
 

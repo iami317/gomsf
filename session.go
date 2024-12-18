@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/iami317/gomsf/rpc"
 	"strings"
-	"time"
 )
 
 type SessionManager struct {
@@ -16,7 +15,6 @@ func (s *SessionManager) List() (rpc.SessionListRes, error) {
 }
 
 func (s *SessionManager) Read(sid int) (string, error) {
-	time.Sleep(time.Millisecond * 100)
 	r, err := s.rpc.Session.MeterpreterRead(sid)
 	if err != nil {
 		return "", err
@@ -38,10 +36,19 @@ func (s *SessionManager) Write(sid int, command string) error {
 	if r.Result == rpc.FAILURE {
 		return fmt.Errorf("cannot write command %s to session %d", command, sid)
 	}
-	if strings.Contains(command, "shell") {
-		time.Sleep(time.Millisecond * 100)
-	}
 	return nil
+}
+
+func (s *SessionManager) ShellWrite(sid int, command string) error {
+	return s.rpc.Session.ShellWrite(sid, command)
+}
+
+func (s *SessionManager) ShellRead(session int, readPointer uint32) (string, error) {
+	return s.rpc.Session.ShellRead(session, readPointer)
+}
+
+func (s *SessionManager) RunSingle(session int, cmd string) (rpc.SessionMeterpreterRunSingleRes, error) {
+	return s.rpc.Session.MeterpreterRunSingle(session, cmd)
 }
 
 func (s *SessionManager) SessionDetach(sid int) (rpc.SessionMeterpreterDetachRes, error) {
